@@ -19,7 +19,7 @@
 # We need these for the jcr_node provider
 package 'libcurl-devel' do
   action :nothing
-end.run_action(:install)
+end.run_action(:install) # means that we want the :install action to run during the compilation phase instead of the execution phase
 
 package 'gcc' do
   action :nothing
