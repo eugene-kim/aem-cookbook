@@ -48,6 +48,39 @@ aem_init "aem-author" do
   action :add
 end
 
+# add the standby runmode
+node.default[:aem][:author][:jar_opts].merge!('standby')
+
+# ensure that the install directory exists
+install_dir = "#{base_dir}/install"
+directory install_dir do
+  owner "crx"
+  group "crx"
+  mode "0644"
+end
+
+# add two configuration files for standby
+template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStoreService.conf" do
+  owner "crx"
+  group "crx"
+  mode "0644"
+  source "segment_node_store_service.conf.erb"
+end
+
+template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.store.StandbyStoreService.config" do
+  owner "crx"
+  group "crx"
+  mode "0644"
+  source "standby_store_service.conf.erb"
+  variables (
+    :persist      => node['aem']['author']['standboy_store_service']['persist'],
+    :primary_host => node['aem']['author']['standboy_store_service']['primary_host'],
+    :port         => node['aem']['author']['standboy_store_service']['port'],
+    :secure       => node['aem']['author']['standboy_store_service']['secure'],
+    :interval     => node['aem']['author']['standboy_store_service']['interval']
+  )
+end
+
 service "aem-author" do
   #init script returns 0 for status no matter what
   status_command "service aem-author status | grep running"

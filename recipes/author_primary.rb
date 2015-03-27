@@ -48,8 +48,8 @@ aem_init "aem-author" do
   action :add
 end
 
-# TODO add in the jar_opts
-# TODO add in the template for the two .config files
+# add the primary runmode
+node.default[:aem][:author][:jar_opts].merge!('primary')
 
 service "aem-author" do
   #init script returns 0 for status no matter what

@@ -103,6 +103,14 @@ default[:aem][:author] = {
   ],
   :find_replication_hosts_dynamically => false
 }
+
+# default values for the StandbyNodeStoreService.config
+default[:aem][:author][:standby_store_service:][:persist] = 'false'
+default[:aem][:author][:standby_store_service:][:primary_host] = '127.0.0.1' #TODO
+default[:aem][:author][:standby_store_service:][:port] = '8023'
+default[:aem][:author][:standby_store_service:][:secure] = 'false'
+default[:aem][:author][:standby_store_service:][:interval] = '5'
+
 default[:aem][:author][:startup][:max_attempts] = 20
 default[:aem][:author][:startup][:wait_between_attempts] = 30
 
