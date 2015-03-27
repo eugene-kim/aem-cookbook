@@ -48,6 +48,9 @@ aem_init "aem-author" do
   action :add
 end
 
+# TODO add in the jar_opts
+# TODO add in the template for the two .config files
+
 service "aem-author" do
   #init script returns 0 for status no matter what
   status_command "service aem-author status | grep running"
@@ -110,7 +113,7 @@ if node[:aem][:version].to_f < 5.5 then
   directory web_inf_dir do
     owner user
     group user
-    mode "0755"
+;    mode "0755"
     action :create
     recursive true
   end
