@@ -45,7 +45,8 @@ aem_init "aem-author" do
   runnable_jar node[:aem][:author][:runnable_jar]
   base_dir node[:aem][:author][:base_dir]
   jvm_opts node[:aem][:author][:jvm_opts]
-  jar_opts get_jar_opts(node[:aem][:author][:jar_opts])
+  jar_opts node[:aem][:author][:jar_opts]
+  jar_opts_runmodes node[:aem][:author][:jar_opts_runmodes]
   action :add
 end
 

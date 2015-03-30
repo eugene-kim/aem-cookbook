@@ -1,12 +1,15 @@
 module Aem
   module Helper
-    def get_jar_opts(jar_opts)
-      if jar_opts.any?
-        jar_opts_string = '-r'
-        jar_opts.each do |jar_opt|
-          jar_opts_string << ' ' + jar_opt
+    def get_jar_opts
+      jar_opts_runmodes = node[:aem][:author][:jar_opts_runmodes]
+      unless jar_opts_runmodes.empty?
+        jar_opts_string = '-r' #TODO make sure you aren't adding a duplicate -r for some users
+        jar_opts_runmodes.each do |jar_opts_runmode|
+          jar_opts_string << ' ' + jar_opts_runmode
         end
-        jar_opts_string
+        node[:aem][:author][:jar_opts].append jar_opts_string
+      else # single jar_opts is being used
+        node[:aem][:author][:jar_opts]
       end
     end
   end

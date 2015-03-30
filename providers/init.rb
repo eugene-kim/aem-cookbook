@@ -29,11 +29,28 @@ action :add do
   var_list.each do |var|
     vars[var] = new_resource.send(var) || node[:aem][var]
   end
+
+  vars[:jar_opts] = get_jar_opts(new_resource.jar_opts, new_resource.jar_opts_runmodes)
+
+  Chef::Log.info(vars[:jar_opts])
+
   template "/etc/init.d/#{service_name}" do
     cookbook 'aem'
     source 'init.erb'
     mode '0755'
     variables(vars)
     notifies :restart, resources(:service => "#{service_name}")
+  end
+end
+
+def get_jar_opts(jar_opts, jar_opts_runmodes)
+  unless jar_opts_runmodes.empty?
+    jar_opts_string = '-r' #TODO make sure you aren't adding a duplicate -r for some users
+    jar_opts_runmodes.each do |jar_opts_runmode|
+      jar_opts_string << ' ' + jar_opts_runmode
+    end
+    jar_opts.append jar_opts_string
+  else # single jar_opts is being used
+    jar_opts
   end
 end

@@ -66,6 +66,8 @@ default[:aem][:author] = {
   :runnable_jar => "aem-author-p4502.jar",
   :base_dir => "/opt/aem/author/crx-quickstart",
   :jvm_opts => {},
+  :jar_opts => [],
+  :jar_opts_runmodes => [],
   :ldap => {
     :enabled => false,
     :options => {}
@@ -105,11 +107,11 @@ default[:aem][:author] = {
 }
 
 # default values for the StandbyNodeStoreService.config
-default[:aem][:author][:standby_store_service:][:persist] = 'false'
-default[:aem][:author][:standby_store_service:][:primary_host] = '127.0.0.1' #TODO
-default[:aem][:author][:standby_store_service:][:port] = '8023'
-default[:aem][:author][:standby_store_service:][:secure] = 'false'
-default[:aem][:author][:standby_store_service:][:interval] = '5'
+default[:aem][:author][:standby_store_service][:persist] = 'false'
+default[:aem][:author][:standby_store_service][:primary_host] = '127.0.0.1' #TODO
+default[:aem][:author][:standby_store_service][:port] = '8023'
+default[:aem][:author][:standby_store_service][:secure] = 'false'
+default[:aem][:author][:standby_store_service][:interval] = '5'
 
 default[:aem][:author][:startup][:max_attempts] = 20
 default[:aem][:author][:startup][:wait_between_attempts] = 30

@@ -27,3 +27,4 @@ attribute :runnable_jar, :kind_of => String, :default => nil
 attribute :base_dir, :kind_of => String, :default => nil
 attribute :jvm_opts, :kind_of => Hash, :default => nil
 attribute :jar_opts, :kind_of => Array, :default => nil
+attribute :jar_opts_runmodes, :kind_of => Array, :default => nil
