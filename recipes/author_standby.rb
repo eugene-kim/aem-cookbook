@@ -17,7 +17,6 @@
 # limitations under the License.
 
 include_recipe "aem::_base_aem_setup"
-Chef::Resource::User.send(:include, Aem::Helper)
 
 unless node[:aem][:use_yum]
   aem_jar_installer "author" do

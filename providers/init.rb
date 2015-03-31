@@ -43,14 +43,19 @@ action :add do
   end
 end
 
+# takes into consideration the "new" way of handling 
 def get_jar_opts(jar_opts, jar_opts_runmodes)
   unless jar_opts_runmodes.empty?
-    jar_opts_string = '-r' #TODO make sure you aren't adding a duplicate -r for some users
     jar_opts_runmodes.each do |jar_opts_runmode|
-      jar_opts_string << ' ' + jar_opts_runmode
+      jar_opts << jar_opts_runmode
     end
-    jar_opts.append jar_opts_string
-  else # single jar_opts is being used
+    # making sure that we don't have duplicate -r flags
+    if jar_opts[0].include? "-r"
+      jar_opts
+    else
+      "-r " << jar_opts.join(' ')
+    end
+  else # jar_opts is most likely an array with a single value containing all of the jar opts 
     jar_opts
   end
 end

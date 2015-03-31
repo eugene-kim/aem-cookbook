@@ -17,7 +17,6 @@
 # limitations under the License.
 
 include_recipe "aem::_base_aem_setup"
-Chef::Resource::User.send(:include, Aem::Helper)
 
 # add the primary runmode
 node.default[:aem][:author][:jar_opts_runmodes] << 'primary'
