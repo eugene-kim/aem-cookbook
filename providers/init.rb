@@ -53,6 +53,7 @@ def get_jar_opts(jar_opts, jar_opts_runmodes)
     if jar_opts[0].include? "-r"
       jar_opts
     else
+      # make than an array
       "-r " << jar_opts.join(' ')
     end
   else # jar_opts is most likely an array with a single value containing all of the jar opts 

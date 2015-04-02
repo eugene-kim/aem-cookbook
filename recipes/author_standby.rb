@@ -18,40 +18,8 @@
 
 include_recipe "aem::_base_aem_setup"
 
-unless node[:aem][:use_yum]
-  aem_jar_installer "author" do
-    download_url node[:aem][:download_url]
-    default_context node[:aem][:author][:default_context]
-    port node[:aem][:author][:port]
-    action :install
-  end
-end
-
-unless node[:aem][:license_url].nil?
-  remote_file "#{node[:aem][:author][:default_context]}/license.properties" do
-    source "#{node[:aem][:license_url]}"
-    mode 0644
-  end
-end
-
-if node[:aem][:version].to_f > 5.4 then
-  node.set[:aem][:author][:runnable_jar] = "aem-author-p#{node[:aem][:author][:port]}.jar"
-end
-
-aem_init "aem-author" do
-  service_name "aem-author"
-  default_context node[:aem][:author][:default_context]
-  runnable_jar node[:aem][:author][:runnable_jar]
-  base_dir node[:aem][:author][:base_dir]
-  jvm_opts node[:aem][:author][:jvm_opts]
-  jar_opts node[:aem][:author][:jar_opts]
-  jar_opts_runmodes node[:aem][:author][:jar_opts_runmodes]
-  action :add
-end
-
 # add the standby runmode
 node.default[:aem][:author][:jar_opts_runmode] << 'standby'
-
 
 # ensure that the install directory exists
 install_dir = "#{base_dir}/install"
@@ -81,6 +49,37 @@ template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.
     :secure       => node['aem']['author']['standboy_store_service']['secure'],
     :interval     => node['aem']['author']['standboy_store_service']['interval']
   )
+end
+
+unless node[:aem][:use_yum]
+  aem_jar_installer "author" do
+    download_url node[:aem][:download_url]
+    default_context node[:aem][:author][:default_context]
+    port node[:aem][:author][:port]
+    action :install
+  end
+end
+
+unless node[:aem][:license_url].nil?
+  remote_file "#{node[:aem][:author][:default_context]}/license.properties" do
+    source "#{node[:aem][:license_url]}"
+    mode 0644
+  end
+end
+
+if node[:aem][:version].to_f > 5.4 then
+  node.set[:aem][:author][:runnable_jar] = "aem-author-p#{node[:aem][:author][:port]}.jar"
+end
+
+aem_init "aem-author" do
+  service_name "aem-author"
+  default_context node[:aem][:author][:default_context]
+  runnable_jar node[:aem][:author][:runnable_jar]
+  base_dir node[:aem][:author][:base_dir]
+  jvm_opts node[:aem][:author][:jvm_opts]
+  jar_opts node[:aem][:author][:jar_opts]
+  jar_opts_runmodes node[:aem][:author][:jar_opts_runmodes]
+  action :add
 end
 
 service "aem-author" do
