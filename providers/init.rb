@@ -43,20 +43,21 @@ action :add do
   end
 end
 
-# takes into consideration the "new" way of handling 
+# appends runmodes to an existing run_modes jar_opt or creates one if it doesn't exist
 def get_jar_opts(jar_opts, jar_opts_runmodes)
-  unless jar_opts_runmodes.empty?
+  run_modes = jar_opts.select{|jar_opt| jar_opt.include? '-r'}  
+  if run_modes.any?
+    run_modes_string = run_modes[0]
+    run_modes_index = jar_opts.index run_modes_string
     jar_opts_runmodes.each do |jar_opts_runmode|
-      jar_opts << jar_opts_runmode
+      run_modes_string << " #{jar_opts_runmode}"
     end
-    # making sure that we don't have duplicate -r flags
-    if jar_opts[0].include? "-r"
-      jar_opts
-    else
-      # make than an array
-      "-r " << jar_opts.join(' ')
+    jar_opts[run_modes_index] = run_modes_string
+  else # a jar_opt with 
+    jar_opts_string = '-r'
+    jar_opts_runmodes.each do |runmode|
+      jar_opts_string << " #{runmode}"
     end
-  else # jar_opts is most likely an array with a single value containing all of the jar opts 
-    jar_opts
+    jar_opts << jar_opts_string
   end
 end
