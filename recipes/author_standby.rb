@@ -19,7 +19,7 @@
 include_recipe "aem::_base_aem_setup"
 
 # add the standby runmode
-node.default[:aem][:author][:jar_opts_runmode] << 'standby'
+node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
 
 # ensure that the install directory exists
 install_dir = "#{base_dir}/install"
@@ -42,7 +42,7 @@ template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.
   group "crx"
   mode "0644"
   source "standby_store_service.conf.erb"
-  variables (
+  variables(
     :persist      => node['aem']['author']['standboy_store_service']['persist'],
     :primary_host => node['aem']['author']['standboy_store_service']['primary_host'],
     :port         => node['aem']['author']['standboy_store_service']['port'],
