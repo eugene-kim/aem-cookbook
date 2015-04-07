@@ -21,6 +21,8 @@ include_recipe "aem::_base_aem_setup"
 # add the standby runmode
 node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
 
+base_dir = node[:aem][:author][:base_dir]
+
 # ensure that the install directory exists
 install_dir = "#{base_dir}/install"
 directory install_dir do
@@ -30,25 +32,27 @@ directory install_dir do
 end
 
 # add two configuration files for standby
-template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStoreService.conf" do
+template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
-  source "segment_node_store_service.conf.erb"
+  source "segment_node_store_service.config.erb"
 end
+
+Chef::Log.info node[:aem][:author][:standby_store_service][:persist]
 
 template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.store.StandbyStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
-  source "standby_store_service.conf.erb"
-  variables(
-    :persist      => node['aem']['author']['standboy_store_service']['persist'],
-    :primary_host => node['aem']['author']['standboy_store_service']['primary_host'],
-    :port         => node['aem']['author']['standboy_store_service']['port'],
-    :secure       => node['aem']['author']['standboy_store_service']['secure'],
-    :interval     => node['aem']['author']['standboy_store_service']['interval']
-  )
+  source "standby_store_service.config.erb"
+  variables({
+    :persist      => node[:aem][:author][:standby_store_service][:persist],
+    :primary_host => node[:aem][:author][:standby_store_service][:primary_host],
+    :port         => node[:aem][:author][:standby_store_service][:port],
+    :secure       => node[:aem][:author][:standby_store_service][:secure],
+    :interval     => node[:aem][:author][:standby_store_service][:interval]
+  })
 end
 
 include_recipe "aem::author_base_setup"

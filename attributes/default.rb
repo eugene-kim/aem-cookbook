@@ -72,6 +72,7 @@ default[:aem][:author] = {
     :enabled => false,
     :options => {}
   },
+
   :validation_urls => [
     "http://localhost:4502/libs/cq/core/content/login.html",
     "http://localhost:4502/damadmin",

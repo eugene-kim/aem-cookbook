@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+base_dir = node[:aem][:author][:base_dir]
+
 unless node[:aem][:use_yum]
   aem_jar_installer "author" do
     download_url node[:aem][:download_url]

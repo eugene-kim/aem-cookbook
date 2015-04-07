@@ -29,10 +29,9 @@ action :add do
   var_list.each do |var|
     vars[var] = new_resource.send(var) || node[:aem][var]
   end
-
-  vars[:jar_opts] = get_jar_opts(new_resource.jar_opts, new_resource.jar_opts_runmodes)
-
-  Chef::Log.info(vars[:jar_opts])
+  # Chef::Log.info get_jar_opts(new_resource.jar_opts, new_resource.jar_opts_runmodes)
+  Chef::Log.info "the result of get_jar_opts(): #{get_jar_opts}"
+  Chef::Log.info "jar opts attribute after get_jar_opts is run: #{node['aem']['author']['jar_opts']}"
 
   template "/etc/init.d/#{service_name}" do
     cookbook 'aem'
@@ -43,9 +42,30 @@ action :add do
   end
 end
 
-# appends runmodes to an existing run_modes jar_opt or creates one if it doesn't exist
-def get_jar_opts(jar_opts, jar_opts_runmodes)
+# # appends runmodes to an existing run_modes jar_opt or creates one if it doesn't exist
+# def get_jar_opts(jar_opts, jar_opts_runmodes)
+#   run_modes = jar_opts.select{|jar_opt| jar_opt.include? '-r'}  
+#   if run_modes.any?
+#     run_modes_string = run_modes[0]
+#     run_modes_index = jar_opts.index run_modes_string
+#     jar_opts_runmodes.each do |jar_opts_runmode|
+#       run_modes_string << " #{jar_opts_runmode}"
+#     end
+#     jar_opts[run_modes_index] = run_modes_string
+#   else # a jar_opt with 
+#     jar_opts_string = '-r'
+#     jar_opts_runmodes.each do |runmode|
+#       jar_opts_string << " #{runmode}"
+#     end
+#     jar_opts << jar_opts_string
+#   end
+# end
+
+def get_jar_opts
+  jar_opts = node['aem']['author']['jar_opts']
+  jar_opts_runmodes = node['aem']['author']['jar_opts_runmodes']
   run_modes = jar_opts.select{|jar_opt| jar_opt.include? '-r'}  
+  Chef::Log.info "run_modes: #{run_modes}"
   if run_modes.any?
     run_modes_string = run_modes[0]
     run_modes_index = jar_opts.index run_modes_string
