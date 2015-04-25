@@ -20,3 +20,4 @@
 node.default[:aem][:author][:jar_opts_runmodes] << 'primary'
 
 include_recipe "aem::author"
+include_recipe "aem::author_standby_logger"
