@@ -59,6 +59,7 @@ default[:aem][:commands] = {
   :add_user => {
     :aem55 => 'curl -u <%= admin_user %>:<%= admin_password %> -FcreateUser= -FauthorizableId=<%= user %> -Frep:password=<%= password %> -Fmembership=<%= group %> http://localhost:<%= port %>/libs/granite/security/post/authorizables'
   }
+
 }
 default[:aem][:author] = {
   :default_context => "/opt/aem/author",
