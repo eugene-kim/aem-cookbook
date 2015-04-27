@@ -8,7 +8,7 @@ logger_package = "cold-standby-logger-1.0.zip"
 logger_package_path = "#{base_dir}/install/#{logger_package}"
 file_owner = "crx"
 if Chef::Config['solo']
-  owner = "vagrant"
+  file_owner = "vagrant"
 end
 
 # ensure that the install directory exists
