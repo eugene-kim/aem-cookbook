@@ -94,6 +94,10 @@ default[:aem][:author] = {
   #    :action => [ :upload, :install, :activate ]
   #  }
   ],
+  :standby_configs => {
+    :segment_node_store_service => 'org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStoreService.config',
+    :standby_store_service      => 'org.apache.jackrabbit.oak.plugins.segment.standby.store.StandbyStoreService.config'
+  },
   #You changed these, right?
   :admin_user => "admin",
   :admin_password => "admin",
