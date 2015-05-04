@@ -19,6 +19,14 @@
 # add the primary runmode
 node.default[:aem][:author][:jar_opts_runmodes] << 'primary'
 
+# stop the AEM service
+service "aem-author" do
+  #init script returns 0 for status no matter what
+  status_command "service aem-author status | grep running"
+  supports :status => true, :stop => true, :start => true, :restart => true
+  action :stop
+end
+
 base_dir = node[:aem][:author][:base_dir]
 
 # remove the standby configuration files from crx-quickstart install
