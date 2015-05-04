@@ -29,5 +29,5 @@ node[:aem][:author][:standby_configs].values.each do |config|
   end
 end
 
-include_recipe "aem::author"
 include_recipe "aem::author_standby_logger"
+include_recipe "aem::author"
