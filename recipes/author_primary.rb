@@ -25,10 +25,10 @@ base_dir = node[:aem][:author][:base_dir]
 node[:aem][:author][:standby_configs].values.each do |config|
   file config do 
     path "#{base_dir}/install/#{config}"
+    owner "crx"
+    group "crx"
     action :delete
   end
 end
 
-#include_recipe "aem::author_standby_logger"
 include_recipe "aem::author"
-include_recipe "aem::author_standby_logger"
