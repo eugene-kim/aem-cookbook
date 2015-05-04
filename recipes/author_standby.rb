@@ -55,8 +55,9 @@ template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.
   })
 end
 
-include_recipe "aem::author_base_setup"
 include_recipe "aem::author_standby_logger"
+include_recipe "aem::author_base_setup"
+# include_recipe "aem::author_standby_logger"
 
 
 
