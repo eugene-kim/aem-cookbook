@@ -114,7 +114,7 @@ default[:aem][:author] = {
 
 # default values for the StandbyNodeStoreService.config
 default[:aem][:author][:standby_store_service][:persist] = 'false'
-default[:aem][:author][:standby_store_service][:primary_host] = '172.28.128.6'#'127.0.0.1' #TODO
+default[:aem][:author][:standby_store_service][:primary_host] = '172.28.128.4'#'127.0.0.1' #TODO
 default[:aem][:author][:standby_store_service][:port] = '8023'
 default[:aem][:author][:standby_store_service][:secure] = 'false'
 default[:aem][:author][:standby_store_service][:interval] = '5'
