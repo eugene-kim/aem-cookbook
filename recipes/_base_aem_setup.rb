@@ -16,6 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This recipe: 
+# - installs required packages and gems
+# - makes sure we have readily available urls for the license file, the .jar file, and an aem version number
+# - installs java using the java cookbook
+# - creates a crx user (if applicable) and a .ssh directory for this user
+
 # We need these for the jcr_node provider
 package 'libcurl-devel' do
   action :nothing
