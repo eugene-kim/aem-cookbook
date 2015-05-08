@@ -29,6 +29,8 @@ end
 
 base_dir = node[:aem][:author][:base_dir]
 
+include_recipe "aem::author_base_setup"
+
 # ensure that the install directory exists
 install_dir = "#{base_dir}/install"
 directory install_dir do
@@ -38,8 +40,6 @@ directory install_dir do
 end
 
 # add two configuration files for standby
-# this assumes that hotfix 5354 (Oak Update) has already been applied
-# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/#{node[:aem][:author][:standby_configs][:segment_node_store_service]}" do
 template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeStoreService.config" do
   owner "crx"
   group "crx"
@@ -47,7 +47,6 @@ template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment
   source "segment_node_store_service.config.erb"
 end
 
-# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/#{node[:aem][:author][:standby_configs][:standby_store_service]}" do
 template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/StandbyStoreService.config" do
   owner "crx"
   group "crx"
@@ -61,8 +60,6 @@ template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment
     :interval     => node[:aem][:author][:standby_store_service][:interval]
   })
 end
-
-include_recipe "aem::author_base_setup"
 
 # ----------------------------- NOT NEEDED FOR STANDBY ---------------------------------
 # #Change admin password
