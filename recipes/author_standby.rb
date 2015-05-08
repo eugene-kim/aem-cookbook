@@ -39,14 +39,16 @@ end
 
 # add two configuration files for standby
 # this assumes that hotfix 5354 (Oak Update) has already been applied
-template "#{base_dir}/install/#{node[:aem][:author][:standby_configs][:segment_node_store_service]}" do
+# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/#{node[:aem][:author][:standby_configs][:segment_node_store_service]}" do
+template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
   source "segment_node_store_service.config.erb"
 end
 
-template "#{base_dir}/install/#{node[:aem][:author][:standby_configs][:standby_store_service]}" do
+# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/#{node[:aem][:author][:standby_configs][:standby_store_service]}" do
+template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/StandbyStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
