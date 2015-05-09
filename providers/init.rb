@@ -32,8 +32,6 @@ action :add do
   Chef::Log.info "vars before get_jar_opts was called: #{vars}"
   vars[:jar_opts] = [get_jar_opts(vars[:jar_opts].dup, vars[:jar_opts_runmodes].dup)]
 
-  Chef::Log.info "the updated vars list: #{vars}"
-
   template "/etc/init.d/#{service_name}" do
     cookbook 'aem'
     source 'init.erb'
