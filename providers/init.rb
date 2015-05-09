@@ -29,7 +29,7 @@ action :add do
   var_list.each do |var|
     vars[var] = new_resource.send(var) || node[:aem][var]
   end
-  Chef::Log.info "vars before get_jar_opts was called: #{vars}"
+
   vars[:jar_opts] = [get_jar_opts(vars[:jar_opts].dup, vars[:jar_opts_runmodes].dup)]
 
   template "/etc/init.d/#{service_name}" do
