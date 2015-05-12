@@ -27,25 +27,32 @@ end
 # add the standby runmode
 node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
 
-include_recipe "aem::author_base_setup"
-
 base_dir = node[:aem][:author][:base_dir]
 
-# stop the AEM service
-service "aem-author" do
-  supports :status => true, :stop => true, :start => true, :restart => true
-  action :stop
+# # stop the AEM service
+# service "aem-author" do
+#   supports :status => true, :stop => true, :start => true, :restart => true
+#   action :stop
+# end
+
+# make sure the install directory is there
+directory "#{base_dir}/install" do
+  owner "crx"
+  group "crx"
+  mode "0644"
 end
 
 # add two configuration files for standby
-template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeStoreService.config" do
+# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeStoreService.config" do
+template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.SegmentNodeStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
   source "segment_node_store_service.config.erb"
 end
 
-template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/StandbyStoreService.config" do
+# template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/standby/store/StandbyStoreService.config" do
+template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.store.StandbyStoreService.config" do
   owner "crx"
   group "crx"
   mode "0644"
@@ -59,10 +66,12 @@ template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment
   })
 end
 
-# restart the AEM service
-service "aem-author" do
-  action :restart
-end
+include_recipe "aem::author_base_setup"
+
+# # restart the AEM service
+# service "aem-author" do
+#   action :restart
+# end
 
 # # stop the AEM service
 # service "aem-author" do
