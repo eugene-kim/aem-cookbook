@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: aem
-# Recipe:: author_base_setup
+# Recipe:: author_start
 #
 # Copyright 2012, Tacit Knowledge, Inc.
 #

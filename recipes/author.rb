@@ -17,7 +17,7 @@
 # limitations under the License.
 
 include_recipe "aem::_base_aem_setup"
-include_recipe "aem::author_base_setup"
+include_recipe "aem::author_start"
 
 #Change admin password
 unless node[:aem][:author][:new_admin_password].nil?
