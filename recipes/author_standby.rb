@@ -18,18 +18,24 @@
 
 include_recipe "aem::_base_aem_setup"
 
-# add the standby runmode
-node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
-
 # stop the AEM service
 service "aem-author" do
   supports :status => true, :stop => true, :start => true, :restart => true
   action :stop
 end
 
-base_dir = node[:aem][:author][:base_dir]
+# add the standby runmode
+node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
 
 include_recipe "aem::author_base_setup"
+
+base_dir = node[:aem][:author][:base_dir]
+
+# stop the AEM service
+service "aem-author" do
+  supports :status => true, :stop => true, :start => true, :restart => true
+  action :stop
+end
 
 # add two configuration files for standby
 template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment/SegmentNodeStoreService.config" do
@@ -52,3 +58,16 @@ template "#{base_dir}/launchpad/config/org/apache/jackrabbit/oak/plugins/segment
     :interval     => node[:aem][:author][:standby_store_service][:interval]
   })
 end
+
+# restart the AEM service
+service "aem-author" do
+  action :restart
+end
+
+# # stop the AEM service
+# service "aem-author" do
+#   supports :status => true, :stop => true, :start => true, :restart => true
+#   action :stop
+# end
+
+# include_recipe "aem::author_base_setup"
