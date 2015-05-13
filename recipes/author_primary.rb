@@ -21,7 +21,7 @@ node.default[:aem][:author][:jar_opts_runmodes] << 'primary'
 
 base_dir = node[:aem][:author][:base_dir]
 
-# remove the standby configuration files from crx-quickstart install
+# remove the standby configuration files from crx-quickstart/install
 node[:aem][:author][:standby_configs].values.each do |config|
   file config do 
     path "#{base_dir}/install/#{config}"

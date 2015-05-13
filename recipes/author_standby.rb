@@ -18,15 +18,7 @@
 
 include_recipe "aem::_base_aem_setup"
 
-# stop the AEM service
-service "aem-author" do
-  supports :status => true, :stop => true, :start => true, :restart => true
-  action :stop
-end
-
 # add the standby runmode
 node.default[:aem][:author][:jar_opts_runmodes] << 'standby'
-
-base_dir = node[:aem][:author][:base_dir]
 
 include_recipe "aem::author_start"
