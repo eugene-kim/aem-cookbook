@@ -16,8 +16,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# the aem-author service should be stopped at this point.
-
 include_recipe "aem::_base_aem_setup"
 
 base_dir = node[:aem][:author][:base_dir]
