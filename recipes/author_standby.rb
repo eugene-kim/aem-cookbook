@@ -53,5 +53,6 @@ end
 
 # start the service
 service "aem-author" do
+  supports :status => true, :stop => true, :start => true, :restart => true
   action :start
 end
