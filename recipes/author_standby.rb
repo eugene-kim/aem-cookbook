@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# the aem-author service should be stopped at this point.
+
 include_recipe "aem::_base_aem_setup"
 
 base_dir = node[:aem][:author][:base_dir]
@@ -51,4 +53,7 @@ template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.
   })
 end
 
-include_recipe "aem::author_base_setup"
+# start the service
+service "aem-author" do
+  action :start
+end
