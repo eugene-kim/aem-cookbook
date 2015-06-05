@@ -18,6 +18,8 @@
 
 include_recipe "aem::_base_aem_setup"
 
+node.default[:aem][:author][:jar_opts_runmodes] << 'nosamplecontent'
+
 base_dir = node[:aem][:author][:base_dir]
 
 # make sure the install directory is there
@@ -25,6 +27,16 @@ directory "#{base_dir}/install" do
   owner "crx"
   group "crx"
   mode "0644"
+end
+
+hotfix_5779 = "cq-6.0.0-hotfix-5779-1.0.0.zip"
+
+cookbook_file hotfix_5779 do
+  path "#{base_dir}/install/#{hotfix_5779}"
+  owner "crx"
+  group "crx"
+  mode "0644"
+  action :create_if_missing
 end
 
 # add two configuration files for standby
@@ -51,8 +63,10 @@ template "#{base_dir}/install/org.apache.jackrabbit.oak.plugins.segment.standby.
   })
 end
 
-# start the service
-service "aem-author" do
-  supports :status => true, :stop => true, :start => true, :restart => true
-  action :start
-end
+include_recipe "aem::author_base_setup"
+
+# # start the service
+# service "aem-author" do
+#   supports :status => true, :stop => true, :start => true, :restart => true
+#   action :start
+# end
